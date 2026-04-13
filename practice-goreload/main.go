@@ -4,70 +4,46 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"practice-goreload/processor"
 	"strings"
 )
 
 func main() {
-
 	text := bufio.NewScanner(os.Stdin)
 	for text.Scan() {
 		line := text.Text()
-		result := strings.Fields(line) // turning it to slice
-		if len(result) == 2 {
-			inputfile, err := os.Open(result[0])
+		command := strings.Fields(line)
+		if len(command) == 2 {
+			inputfile, err := os.Open(command[0])
 			if err != nil {
-				fmt.Println("error opening the inputfile")
-				return
+				fmt.Println("error opening the file", err)
 			}
 			defer inputfile.Close()
-			outputfile, err := os.Create(result[1])
+
+			outputfile, err := os.Create(command[1])
 			if err != nil {
-				fmt.Println("error creating the outputfile")
-				return
+				fmt.Println("error creating file", err)
 			}
 			defer outputfile.Close()
-			// scanner := bufio.NewScanner(inputfile)
-			//  writer := bufio.NewWriter(outputfile)
-			//  for scanner.Scan(){
-			// 	line := scanner.Text()
-			// 	new := HexBin(line)
-			// 	new =
-			//  }
+			scanner := bufio.NewScanner(inputfile)
+			writer := bufio.NewWriter(outputfile)
 
-			break
+			for scanner.Scan() {
+				result := scanner.Text()
+
+				line := processor.Bin(result)
+				line = processor.Hex(line)
+				line = processor.Upper(line)
+				line = processor.Cap(line)
+				line = processor.Low(line)
+				line = processor.Article(line)
+
+				writer.WriteString(line + "\n")
+			}
+			writer.Flush()
+
 		} else {
-			fmt.Println("Enter Input.txt and output.txt")
+			fmt.Println("incomplete command")
 		}
 	}
-
-	// if len(os.Args) != 3 {
-	// 	fmt.Println("Error: incomplete argument")
-	// 	fmt.Println("usage: go run . <input.txt> <output.txt>")
-	// 	return
-	// }
-	// inputfile := os.Args[1]
-	// outputfile := os.Args[2]
-
-	// inputfile, err := os.Open("input.txt")
-	// if err != nil {
-	// 	fmt.Println("error opening the inputfile")
-	// 	return
-	// }
-	// defer inputfile.Close()
-
-	// outputfile, err := os.Create("output.txt")
-	// if err != nil {
-	// 	fmt.Println("error creating the outputfile")
-	// 	return
-	// }
-	// defer outputfile.Close()
-
-	// scanner := bufio.NewScanner(inputfile)
-	// writer := bufio.NewWriter(outputfile)
-
-	// for scanner.Scan() {
-	// 	line := scanner.Text()
-	// }
-	// writer.Flush()
-
 }
