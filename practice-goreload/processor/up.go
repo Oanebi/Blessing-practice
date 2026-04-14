@@ -30,7 +30,7 @@ func Upper(s string) string {
 				}
 			}
 			text = append(text[:i], text[i+1:]...)
-			i++
+			i--
 		}
 
 	}

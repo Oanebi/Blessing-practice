@@ -13,6 +13,7 @@ func Hex(s string) string {
 			if err == nil {
 				word[i-1] = strconv.FormatInt(int64(num), 10)
 				word = append(word[:i], word[i+1:]...)
+				i--
 
 			}
 		}
@@ -29,7 +30,7 @@ func Bin(s string) string {
 			if err == nil {
 				word[i-1] = strconv.FormatInt(int64(num), 10)
 				word = append(word[:i], word[i+1:]...)
-
+				i--
 			}
 		}
 	}

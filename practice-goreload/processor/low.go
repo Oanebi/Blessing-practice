@@ -11,6 +11,7 @@ func Low(s string) string {
 		if word[i] == "(low)" && i > 0 {
 			word[i-1] = strings.ToLower(word[i-1])
 			word = append(word[:i], word[i+1:]...)
+			i--
 
 		}
 
@@ -31,6 +32,7 @@ func Low(s string) string {
 
 			}
 			word = append(word[:i], word[i+1:]...)
+			i--
 		}
 
 	}

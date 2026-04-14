@@ -31,12 +31,7 @@ func main() {
 			for scanner.Scan() {
 				result := scanner.Text()
 
-				line := processor.Bin(result)
-				line = processor.Hex(line)
-				line = processor.Upper(line)
-				line = processor.Cap(line)
-				line = processor.Low(line)
-				line = processor.Article(line)
+				line := processor.Compiler(result)
 
 				writer.WriteString(line + "\n")
 			}
