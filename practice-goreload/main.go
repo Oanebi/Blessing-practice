@@ -36,9 +36,11 @@ func main() {
 				writer.WriteString(line + "\n")
 			}
 			writer.Flush()
-
+			break
 		} else {
 			fmt.Println("incomplete command")
 		}
+
 	}
+
 }
