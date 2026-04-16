@@ -5,30 +5,27 @@ import (
 	"strings"
 )
 
-func Upper(s string) string {
-	word := strings.Fields(s)
+func Case(s string) string {
+	text := strings.ReplaceAll(s, ", ", ",")
+	word := strings.Fields(text)
 	for i := 0; i < len(word); i++ {
 		if word[i] == "(up)" && i > 0 {
 			word[i-1] = strings.ToUpper(word[i-1])
 			word = append(word[:i], word[i+1:]...)
 			i--
-		}
-
-		if word[i] == "(low)" && i > 0 {
+		} else if word[i] == "(low)" && i > 0 {
 			word[i-1] = strings.ToLower(word[i-1])
 			word = append(word[:i], word[i+1:]...)
 			i--
-		}
-		if word[i] == "(cap)" && i > 0 {
+		} else if word[i] == "(cap)" && i > 0 {
 			word[i-1] = strings.Title(word[i-1])
 			word = append(word[:i], word[i+1:]...)
 			i--
 		}
 		if strings.Contains(word[i], "(") && strings.Contains(word[i], ")") {
-			word[i] = strings.Trim(word[i], "(),.?!:;")
+			word[i] = strings.Trim(word[i], "()")
 			if strings.Contains(word[i], ",") {
 				result := strings.Split(word[i], ",")
-
 				num, err := strconv.Atoi(result[1])
 				if err == nil {
 					start := i - num
@@ -45,10 +42,9 @@ func Upper(s string) string {
 						}
 					}
 				}
-				word = append(word[:i], word[i+1:]...)
-				i--
-
 			}
+			word = append(word[:i], word[i+1:]...)
+			i--
 		}
 	}
 	return strings.Join(word, " ")

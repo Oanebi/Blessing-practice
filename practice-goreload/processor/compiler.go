@@ -4,9 +4,10 @@ func Compiler(text string) string {
 
 	text = Hex(text)
 	text = Bin(text)
-	text = Upper(text)
 
 	text = Article(text)
 	text = Fixpunctuations(text)
-	return Quote(text)
+	text = Quote(text)
+	text = Case(text)
+	return text
 }
